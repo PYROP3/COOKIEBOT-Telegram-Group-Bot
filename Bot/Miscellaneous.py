@@ -11,7 +11,8 @@ from telepot.namedtuple import InlineKeyboardMarkup, InlineKeyboardButton
 from Publisher import POSTMAIL_CHAT_LINK
 from Server import NUMBER_CHATS
 import Distortioner
-from loc import i18n
+import Fortune
+from loc import i18n, VALID_LANGS
 
 bloblist_ideiadesenho = list(storage_bucket.list_blobs(prefix="IdeiaDesenho"))
 bloblist_death = list(storage_bucket.list_blobs(prefix="Death"))
@@ -25,6 +26,9 @@ NEW_CHAT_LINK = "https://t.me/CookieMWbot?startgroup=new"
 WEBSITE_LINK = "https://cookiebotfur.net"
 TEST_CHAT_LINK = "https://t.me/+mX6W3tGXPew2OTIx"
 UPDATES_CHANNEL_LINK = "https://t.me/cookiebotupdates"
+
+# Initialize with corpus
+fortunes = {i18n._lang_chain(lang): Fortune.FortuneGenerator(i18n.get_file("sorte.txt", lang=lang).splitlines()) for lang in VALID_LANGS}
 
 def decapitalize(s, upper_rest = False):
     return ''.join([s[:1].lower(), (s[1:].upper() if upper_rest else s[1:])])
@@ -359,7 +363,7 @@ def death(cookiebot, msg, chat_id, language):
 def fortune_cookie(cookiebot, msg, chat_id, language):
     send_chat_action(cookiebot, chat_id, 'upload_photo')
     anim_id = send_animation(cookiebot, chat_id, 'https://s12.gifyu.com/images/S5e9b.gif', msg_to_reply=msg)
-    line = i18n.get_random_line("sorte.txt", lang=language)
+    line = fortunes.get(i18n._lang_chain(language)).generate()
     numbers = []
     tens = []
     while len(numbers) < 6:

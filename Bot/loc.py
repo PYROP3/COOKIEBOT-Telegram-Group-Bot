@@ -155,6 +155,8 @@ i18n = Localizer(
     fallback=fallback,
 )
 
+VALID_LANGS = ["pt", "es", "eng"]
+
 # Acessos:
 # i18n.get("greeting", lang="pt")
 # i18n.get("welcome", lang="es", user="Felipe")

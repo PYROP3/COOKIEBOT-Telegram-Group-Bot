@@ -23,3 +23,5 @@ gunicorn
 pyopenssl
 psutil
 PyJWT
+nltk
+markovify
