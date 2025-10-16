@@ -81,7 +81,7 @@ stop_services() {
 show_status() {
     print_status "Service Status:"
     echo
-    docker-compose ps 2>/dev/null || echo "No services running"
+    docker compose ps 2>/dev/null || echo "No services running"
     echo
     
     print_status "Resource Usage:"
@@ -92,10 +92,10 @@ show_logs() {
     local service="$1"
     if [ -z "$service" ]; then
         print_status "Showing logs for all services..."
-        docker-compose logs -f --tail=50
+        docker compose logs -f --tail=50
     else
         print_status "Showing logs for $service..."
-        docker-compose logs -f --tail=50 "$service"
+        docker compose logs -f --tail=50 "$service"
     fi
 }
 
@@ -107,7 +107,7 @@ restart_service() {
     fi
     
     print_status "Restarting $service..."
-    docker-compose restart "$service"
+    docker compose restart "$service"
     print_success "$service restarted successfully"
 }
 
