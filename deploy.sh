@@ -42,11 +42,6 @@ check_requirements() {
         exit 1
     fi
     
-    if ! command -v docker-compose &> /dev/null; then
-        print_error "Docker Compose is not installed or not in PATH"
-        exit 1
-    fi
-    
     print_success "All requirements satisfied"
 }
 
@@ -59,7 +54,7 @@ build_image() {
 start_services() {
     print_status "Starting services..."
     
-    docker-compose up -d
+    docker compose up -d
     print_success "All services started successfully"
     
     print_status "Waiting for services to be healthy..."
@@ -79,7 +74,7 @@ start_services() {
 
 stop_services() {
     print_status "Stopping all services..."
-    docker-compose down 2>/dev/null || true
+    docker compose down 2>/dev/null || true
     print_success "All services stopped"
 }
 
